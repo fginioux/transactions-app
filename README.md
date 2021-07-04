@@ -24,8 +24,15 @@ project display application mobile with Ionic 5:
 ## Installation
 Install deps:
 
-‘‘‘‘
+````
 npm install && npx ionic serve --lab
-‘‘‘‘
+````
 
 Will start a server on a specific port with IOS and Android versions on same screen.
+
+````
+npm run test -- --code-coverage
+````
+
+Will run the unit test task with code coverage report
+
