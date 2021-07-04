@@ -1,0 +1,19 @@
+<div *ngIf="fGroup" [formGroup]="fGroup">
+  <ion-item>
+    <ion-label position="floating">{{ 'refine.filterBy' | translate }}</ion-label>
+    <ion-select name="filterBy" formControlName="filterBy" [interfaceOptions]="{header: ('refine.select.title' | translate)}" placeholder="Account holder">
+      <ion-select-option value="">{{ 'refine.all' | translate }}</ion-select-option>
+      <ion-select-option *ngFor="let holder of accountHolders" [value]="holder">{{ holder }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">{{ 'refine.orderBy' | translate }}</ion-label>
+    <ion-select name="orderBy" formControlName="orderBy" [interfaceOptions]="{header: ('refine.select.title' | translate)}" placeholder="Select">
+      <ion-select-option value="date">{{ 'refine.date' | translate }}</ion-select-option>
+      <ion-select-option value="amount">{{ 'refine.amount' | translate }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button size="small" expand="block" color="success" (click)="submit()">{{ 'refine.apply' | translate }}</ion-button>
+</div>

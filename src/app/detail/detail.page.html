@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'detail.title' | translate }}</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button color="success"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="data">
+    <ion-item>
+      <ion-label position="floating">{{ 'form.transaction.label.accountHolder' | translate }}</ion-label>
+      <ion-input [value]="data.accountHolder" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">{{ 'form.transaction.label.date' | translate }}</ion-label>
+      <ion-input [value]="data.date | dateFormat" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">{{ 'form.transaction.label.amount' | translate }}</ion-label>
+      <ion-input [value]="data.amount | currencyFormat" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item [lines]="data.note ? 'full' : 'none'">
+      <ion-label position="floating">{{ 'form.transaction.label.iban' | translate }}</ion-label>
+      <ion-input [value]="data.iban | ibanFormatter" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item lines="none" *ngIf="data.note">
+      <ion-label position="floating">{{ 'form.transaction.label.note' | translate }}</ion-label>
+      <ion-textarea readonly="true" auto-grow="true" [value]="data.note"></ion-textarea>
+    </ion-item>
+  </div>
+</ion-content>

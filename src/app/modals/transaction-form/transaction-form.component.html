@@ -1,0 +1,88 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        <ng-container *ngIf="data?.id">{{ 'form.transaction.title.update' | translate }}</ng-container>
+        <ng-container *ngIf="!data?.id">{{ 'form.transaction.title.add' | translate }}</ng-container>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content [fullscreen]="true">
+    <div slot="fixed" class="position-bottom">
+      <ion-button [disabled]="fGroup.invalid" color="success" expand="block" (click)="save()">
+        {{ 'button.save' | translate }}
+      </ion-button>
+
+      <ion-button color="primary" expand="block" (click)="cancel()">
+        {{ 'button.cancel' | translate }}
+      </ion-button>
+    </div>
+
+    <div [formGroup]="fGroup">
+      <ion-item>
+        <ion-label position="floating">{{ 'form.transaction.label.accountHolder' | translate }}</ion-label>
+        <ion-input name="accountHolder" formControlName="accountHolder" type="text"></ion-input>
+      </ion-item>
+
+      <div class="error-message" *ngIf="accountHolderCtrl.touched && accountHolderCtrl.invalid">
+        <div class="error-message-container">
+          <ion-text color="danger">
+            <p>{{ 'form.transaction.error.accountHolder.required' | translate }}</p>
+          </ion-text>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">{{ 'form.transaction.label.iban' | translate }}</ion-label>
+        <ion-input name="iban" formControlName="iban" type="text"></ion-input>
+      </ion-item>
+
+      <div class="error-message" *ngIf="ibanCtrl.touched && ibanCtrl.invalid">
+        <div class="error-message-container">
+          <ion-text color="danger">
+            <p>{{ error({required: ('form.transaction.error.iban.required' | translate), iban: ('form.transaction.error.iban.format' | translate)}, ibanCtrl.errors) }}</p>
+          </ion-text>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">{{ 'form.transaction.label.amount' | translate }}</ion-label>
+        <ion-input name="amount" formControlName="amount" type="number"></ion-input>
+      </ion-item>
+
+      <div class="error-message" *ngIf="amountCtrl.touched && amountCtrl.invalid">
+        <div class="error-message-container">
+          <ion-text color="danger">
+            <p>{{ error({
+              required: ('form.transaction.error.amount.required' | translate),
+              min: ('form.transaction.error.amount.min' | translate),
+              max: ('form.transaction.error.amount.max' | translate),
+              minLength: ('form.transaction.error.amount.min' | translate),
+              maxLength: ('form.transaction.error.amount.max' | translate),
+              maxDecimal: ('form.transaction.error.amount.decimal' | translate)
+            }, amountCtrl.errors) }}</p>
+          </ion-text>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">{{ 'form.transaction.label.date' | translate }}</ion-label>
+        <ion-datetime [min]="minDate" name="date" formControlName="date" picker-format="DD MMMM YYYY" display-format="DD.MM.YYYY"></ion-datetime>
+      </ion-item>
+
+      <div class="error-message" *ngIf="dateCtrl.touched && dateCtrl.invalid">
+        <div class="error-message-container">
+          <ion-text color="danger">
+            <p>{{ 'form.transaction.error.date.required' | translate }}</p>
+          </ion-text>
+        </div>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="floating">{{ 'form.transaction.label.note' | translate }}</ion-label>
+        <ion-textarea name="note" formControlName="note"></ion-textarea>
+      </ion-item>
+    </div>
+  </ion-content>
+</div>

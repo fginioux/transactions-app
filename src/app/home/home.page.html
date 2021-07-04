@@ -1,20 +1,52 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>
-      Blank
+      {{ 'home.title' | translate }}
     </ion-title>
+
+    <ion-buttons slot="primary" class="toolbar-buttons">
+      <ion-button [disabled]="disabledRefineOptions" fill="clear" (click)="refine($event)">
+        <ion-icon color="success" slot="end" size="medium" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div slot="fixed" id="action-container">
+    <ion-button color="success" (click)="add()">
+      <ion-icon size="large" name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </div>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-list *ngIf="(records$ | async)?.length; else noRecords">
+      <ion-item-sliding *ngFor="let t of records$ | async; last as isLast">
+        <ion-item-options side="end">
+          <ion-item-option color="primary" (click)="edit(t.id)">
+            <ion-icon size="large" name="create-outline"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="delete(t.id)">
+            <ion-icon size="large" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+
+        <ion-item [routerLink]="['/detail', t.id]" [lines]="isLast ? 'none' : 'full'">
+          <ion-label>
+            <div>Date: {{ t.date | dateFormat }}</div>
+            <div>Amount: {{ t.amount | currencyFormat }}</div>
+            Account holder: {{ t.accountHolder }}
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+    </ion-list>
   </div>
 </ion-content>
+
+<ng-template #noRecords>
+  <div class="higlight">
+    <p>
+      {{ noRecordsMessage }}
+    </p>
+  </div>
+</ng-template>
